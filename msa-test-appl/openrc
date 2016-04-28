@@ -1,0 +1,4 @@
+export OS_USERNAME="myname"
+export OS_PASSWORD="mypassword"
+export OS_TENANT_NAME="mytenant"
+export OS_AUTH_URL="http://10.20.0.2:5000/v2.0/"
