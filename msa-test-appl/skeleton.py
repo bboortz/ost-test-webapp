@@ -5,7 +5,7 @@ from testcases import TestCases
 
 
 def main():
-	testcases = TestCases()
+	testcases = TestCases(show_errors_only=True)
 	testcases.run()
 	testcases.print_results()
 

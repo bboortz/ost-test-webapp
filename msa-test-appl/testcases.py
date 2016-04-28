@@ -87,9 +87,10 @@ class TestSequence(unittest.TestCase):
 
 class TestCases():
 
-	def __init__(self):
+	def __init__(self, show_errors_only=False):
 		self.suite = None
 		self.devnull = sys.stderr = open(os.devnull, 'w')
+		self.show_errors_only = show_errors_only
 
 	def run(self):
 		self.suite = unittest.TestLoader().loadTestsFromTestCase(TestSequence)
@@ -109,6 +110,9 @@ class TestCases():
 				test_count += 1
 				if not test.results.itervalues().next()['success']:
 					fail_count += 1
+				else:
+					if self.show_errors_only:
+						continue
 				ans.update(test.results)
 
 		result = {'summary': { 'tests': test_count, 'failed': fail_count  }, 'results': ans }

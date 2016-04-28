@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
 
 
-testcases = TestCases()
+testcases = TestCases(show_errors_only=True)
 
 
 @app.route('/alive')
