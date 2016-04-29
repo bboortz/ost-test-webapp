@@ -41,6 +41,7 @@ def test_assert(condition, message=None):
 		raise TestError(message)
 
 
+
 # Exception Type
 class TestError(Exception):
         def __init__(self):
