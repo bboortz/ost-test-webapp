@@ -14,3 +14,10 @@ A web application to test the health of an OpenStack Cloud
 ** try to reach services on the internet
 ** try to reach services on the intranet
 
+
+
+# Workflow
+
+test-job --> test-webapp
+         \> info-webapp
+news-feed --> info-webapp
