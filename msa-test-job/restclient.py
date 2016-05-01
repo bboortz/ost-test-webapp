@@ -36,7 +36,7 @@ class RestClient():
 			raise RestError(), None, sys.exc_info()[2]
 
 		if response.status_code not in self.good_status_codes:
-			raise RestError("bad status code: %s" % response.status_code)
+			raise RestError("bad status code: %s - %s" % (response.status_code, response.reason) )
 
 		if self.is_format_json():
 			result = response.json()
