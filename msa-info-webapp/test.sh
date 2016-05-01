@@ -1,4 +1,7 @@
 #!/bin/bash
 
-curl --insecure -X POST --data info="{\"key-$RANDOM\": \"value-$RANDOM\" }" https://localhost:9090/api/info
-curl --insecure -X POST --data info="{\"key-$RANDOM\": { \"key-$RANDOM\": \"value-$RANDOM\" } }" https://localhost:9090/api/info
+URL="https://localhost:9091/api/info"
+
+curl --insecure -H "Content-Type: application/json" -X POST --data "{\"key-$RANDOM\": \"value-$RANDOM\" }" "$URL"
+curl --insecure -H "Content-Type: application/json" -X POST --data "{\"key-$RANDOM\": { \"key-$RANDOM\": \"value-$RANDOM\" } }" ${URL}
+#curl --insecure -H "Content-Type: application/json" -X GET "$URL" 
