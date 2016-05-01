@@ -25,15 +25,18 @@ class RestClient():
 		self.format = format
 		self.good_status_codes = good_status_codes
 		self.ssl_verify = ssl_verify
+		self.timeout = 1.0
 
 	def get(self, url):
 		result = None
 		try:
-			response = requests.get(url, verify=self.ssl_verify)
+			response = requests.get(url, verify=self.ssl_verify, timeout=self.timeout)
 		except requests.exceptions.ConnectionError as e:
 			raise RestError("cannot connect to: %s" % url), None, sys.exc_info()[2]
+		except requests.exceptions.Timeout as e:
+			raise RestError("connection timed out to: %s after %s seconds" % (url, self.timeout) ), None, sys.exc_info()[2]
 		except Exception as e:
-			raise RestError(), None, sys.exc_info()[2]
+			raise RestError(e.message), None, sys.exc_info()[2]
 
 		if response.status_code not in self.good_status_codes:
 			raise RestError("bad status code: %s - %s" % (response.status_code, response.reason) )
