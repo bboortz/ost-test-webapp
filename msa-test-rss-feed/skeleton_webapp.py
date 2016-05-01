@@ -59,7 +59,7 @@ def main():
 	os.environ['DEBUG'] = "1"
 
 	app.secret_key = os.urandom(24)
-	app.run(host='0.0.0.0', port=9090, ssl_context=context, threaded=True, debug=True)
+	app.run(host='0.0.0.0', port=9092, ssl_context=context, threaded=True, debug=True)
 
 
 if __name__ == '__main__':

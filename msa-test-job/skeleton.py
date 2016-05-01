@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
+from os import sys, path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 import sys
 import os
-from restclient import RestClient, RestError
+from restclient.restclient import RestClient, RestError
 from pprint import pprint
 
 
