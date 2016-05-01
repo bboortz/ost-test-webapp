@@ -47,7 +47,7 @@ def api_post_info():
 	item = { "%s" % db_id:  content }
 	db_id += 1
 	db.update(item)
-	return make_response(jsonify({'status': 'success', 'id': 1234, 'date': time.time()}), 201)
+	return make_response(jsonify({'status': 'success', 'id': db_id, 'date': time.time()}), 201)
 
 @app.errorhandler(400)
 def not_found(error):

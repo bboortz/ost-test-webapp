@@ -25,7 +25,7 @@ class RestClient():
 		self.format = format
 		self.good_status_codes = good_status_codes
 		self.ssl_verify = ssl_verify
-		self.timeout = 1.0
+		self.timeout = 0.03
 
 	def get(self, url):
 		result = None
