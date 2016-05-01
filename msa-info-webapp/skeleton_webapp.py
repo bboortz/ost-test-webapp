@@ -3,7 +3,7 @@
 import sys
 import os
 import ssl
-from datetime import datetime
+import time
 from flask import Flask, __version__
 from flask import jsonify, make_response, request
 import json
@@ -12,12 +12,14 @@ import json
 context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 context.load_cert_chain('cert.pem', 'key.pem')
 
+db ={}
+db_id = 0
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'top secret!'
 
 
-db ={}
 
 
 @app.route('/alive')
@@ -35,11 +37,17 @@ def api_get_info():
 
 @app.route('/api/info', methods=['POST'])
 def api_post_info():
-	content =  request.form['info'] 
-	json1 = content.replace("'", "\"")
-	dict = json.loads( json1 )
-	db.update(dict)
-	return make_response(jsonify({'status': 'success', 'id': 1234, 'date': datetime.utcnow()}), 201)
+	global db
+	global db_id
+	content =  request.json
+	print content
+	print dir(content)
+	#json1 = content.replace("'", "\"")
+	#dict = json.loads( content )
+	item = { "%s" % db_id:  content }
+	db_id += 1
+	db.update(item)
+	return make_response(jsonify({'status': 'success', 'id': 1234, 'date': time.time()}), 201)
 
 @app.errorhandler(400)
 def not_found(error):
