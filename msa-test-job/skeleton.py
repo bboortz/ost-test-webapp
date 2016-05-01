@@ -3,6 +3,7 @@
 import sys
 import os
 from datetime import datetime
+from pprint import pprint
 import requests
 import json
 
@@ -30,7 +31,12 @@ class RestClient():
 
 	def get(self, url):
 		result = None
-		response = requests.get(url, verify=self.ssl_verify)
+		try:
+			response = requests.get(url, verify=self.ssl_verify)
+		except requests.exceptions.ConnectionError as e:
+			raise RestError("cannot connect to: %s" % url), None, sys.exc_info()[2]
+		except Exception as e:
+			raise RestError(), None, sys.exc_info()[2]
 
 		if response.status_code not in self.good_status_codes:
 			raise RestError("bad status code: %s" % response.status_code)
@@ -56,9 +62,12 @@ def main():
 	# This allows us to use a plain HTTP callback
 	os.environ['DEBUG'] = "1"
 	rc = RestClient(ssl_verify=False)
-	result = rc.get("https://localhost:9090/api/test")
-	from pprint import pprint
-	pprint(result)
+
+	try:
+		result = rc.get("https://localhost:9090/api/test")
+		pprint(result)
+	except Exception as e:
+		print e.value
 
 
 
