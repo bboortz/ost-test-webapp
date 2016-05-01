@@ -2,7 +2,7 @@
 
 import sys
 import os
-from restclient import RestClient
+from restclient import RestClient, RestError
 from pprint import pprint
 
 
@@ -16,8 +16,12 @@ def main():
 	try:
 		result = rc.get("https://localhost:9090/api/test")
 		pprint(result)
-	except Exception as e:
+		result = rc.post("https://localhost:9091/api/info", payload=result)
+		pprint(result)
+	except RestError as e:
 		print e.value
+	except Exception as e:
+		print e
 
 
 

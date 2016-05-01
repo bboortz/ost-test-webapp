@@ -48,8 +48,29 @@ class RestClient():
 
 		return result
 
-	def post(self, url):
-		pass
+	def post(self, url, payload):
+		result = None
+		try:
+			if self.is_format_json():
+				response = requests.post(url, verify=self.ssl_verify, timeout=self.timeout, json=payload)
+			else:
+				response = requests.post(url, verify=self.ssl_verify, timeout=self.timeout, data=payload)
+		except requests.exceptions.ConnectionError as e:
+			raise RestError("cannot connect to: %s" % url), None, sys.exc_info()[2]
+		except requests.exceptions.Timeout as e:
+			raise RestError("connection timed out to: %s after %s seconds" % (url, self.timeout) ), None, sys.exc_info()[2]
+		except Exception as e:
+			raise RestError(e.message), None, sys.exc_info()[2]
+
+		if response.status_code not in self.good_status_codes:
+			raise RestError("bad status code: %s - %s" % (response.status_code, response.reason) )
+
+		if self.is_format_json():
+			result = response.json()
+		else:
+			result = response.text()
+
+		return result
 
 	def is_format_json(self):
 		if (self.format == "json"):
