@@ -18,6 +18,6 @@ A web application to test the health of an OpenStack Cloud
 
 # Workflow
 
-test-job --> test-webapp
-         \> info-webapp
-news-feed --> info-webapp
+test-job --get--> test-webapp
+         \-post-> info-webapp
+news-feed -get--> info-webapp
