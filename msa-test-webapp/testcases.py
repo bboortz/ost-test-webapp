@@ -69,7 +69,6 @@ class TestSequence(unittest.TestCase):
 
 	@store_result
 	def test2_fail(self):
-		self.assertEqual(1, 2)
 		test_assert(1 == 2, "cannot calculate")
 		return "SUCCESS"
 
@@ -92,8 +91,10 @@ class TestCases():
 		self.suite = None
 		self.devnull = sys.stderr = open(os.devnull, 'w')
 		self.show_errors_only = show_errors_only
+		self.start_time = 0
 
 	def run(self):
+		self.start_time = time.time()
 		self.suite = unittest.TestLoader().loadTestsFromTestCase(TestSequence)
 		unittest.TextTestRunner(stream=self.devnull, verbosity=0).run(self.suite)
 
@@ -116,7 +117,8 @@ class TestCases():
 						continue
 				ans.update(test.results)
 
-		result = {'summary': { 'tests': test_count, 'failed': fail_count  }, 'results': ans }
+		runtime = time.time() - self.start_time
+		result = {'date': time.time(), 'summary': { 'tests': test_count, 'failed': fail_count, 'runtime': runtime }, 'results': ans }
 		return result
 
 

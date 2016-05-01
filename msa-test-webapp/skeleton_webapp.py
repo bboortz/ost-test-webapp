@@ -29,13 +29,9 @@ def api():
 
 @app.route('/api/test')
 def api_test():
-	try:
-		testcases.run()
-	except:
-		pass
+	testcases.run()
 	results = testcases.get_results()
 	return jsonify( results )
-#        return jsonify( { '#tests': no_tests, '#failures': no_failures, 'failures': failures, 'result': result } )
 
 @app.errorhandler(400)
 def not_found(error):
@@ -53,10 +49,10 @@ def internal_error(error):
 
 def main():
 	# This allows us to use a plain HTTP callback
-	os.environ['DEBUG'] = "0"
+	os.environ['DEBUG'] = "1"
 
 	app.secret_key = os.urandom(24)
-	app.run(host='0.0.0.0', port=9090, ssl_context=context, threaded=True, debug=False)
+	app.run(host='0.0.0.0', port=9090, ssl_context=context, threaded=True, debug=True)
 
 
 if __name__ == '__main__':
