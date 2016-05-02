@@ -21,11 +21,11 @@ class RestError(Exception):
 
 class RestClient():
 	
-	def __init__(self, format="json", good_status_codes=[200,201], ssl_verify=True):
+	def __init__(self, format="json", good_status_codes=[200,201], ssl_verify=True, timeout=0.03):
 		self.format = format
 		self.good_status_codes = good_status_codes
 		self.ssl_verify = ssl_verify
-		self.timeout = 0.03
+		self.timeout = timeout
 
 	def get(self, url):
 		result = None
