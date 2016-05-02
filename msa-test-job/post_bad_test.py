@@ -22,7 +22,7 @@ def main():
 			"results": {
 			},
 			"summary": {
-				"failed": 0,
+				"failed": 1,
 				"runtime": 0.0004849433898925781,
 				"tests": 4
 			}
