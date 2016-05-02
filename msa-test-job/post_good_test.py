@@ -16,11 +16,18 @@ def main():
 	rc = RestClient(ssl_verify=False)
 
 	try:
-		for i in range(1,1000):
-			result = rc.get("https://localhost:9090/api/test")
-			pprint(result)
-			result = rc.post("https://localhost:9091/api/info", payload=result)
-			pprint(result)
+		result = {
+			"date": 1462130168.531782,
+			"results": {
+			},
+			"summary": {
+				"failed": 0,
+				"runtime": 0.0004849433898925781,
+				"tests": 4
+			}
+		}
+		result = rc.post("https://localhost:9091/api/info", payload=result)
+		pprint(result)
 	except RestError as e:
 		print e.value
 	except Exception as e:
